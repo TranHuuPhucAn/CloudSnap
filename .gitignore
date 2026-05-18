@@ -1,0 +1,9 @@
+# Terraform
+**/.terraform/
+*.tfstate
+*.tfstate.backup
+*.tfvars       # Keeps secrets out of git
+.terraform.lock.hcl
+
+# AWS
+.aws/
