@@ -42,6 +42,8 @@ resource "aws_s3_bucket_lifecycle_configuration" "raw_uploads" {
     id     = "expire-raw-uploads"
     status = "Enabled"
 
+    filter {}
+
     expiration {
       days = 7
     }

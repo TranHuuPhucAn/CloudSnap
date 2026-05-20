@@ -1,7 +1,7 @@
 # SQS queue# terraform/sqs.tf
 resource "aws_sqs_queue" "dlq" {
   name                      = "${var.project_name}-dlq"
-  message_retention_seconds = 1209600  # 14 days
+  message_retention_seconds = 1209600 # 14 days
 
   tags = {
     Name    = "${var.project_name}-dlq"
@@ -11,11 +11,11 @@ resource "aws_sqs_queue" "dlq" {
 
 resource "aws_sqs_queue" "processing" {
   name                       = "${var.project_name}-processing"
-  visibility_timeout_seconds = 300  
+  visibility_timeout_seconds = 300
 
   redrive_policy = jsonencode({
     deadLetterTargetArn = aws_sqs_queue.dlq.arn
-    maxReceiveCount     = 3  
+    maxReceiveCount     = 3
   })
 
   tags = {

@@ -10,3 +10,8 @@ variable "project_name" {
   type        = string
   default     = "cloudsnap"
 }
+
+variable "notification_email" {
+  description = "Email address for SNS job completion alerts"
+  type        = string
+}
