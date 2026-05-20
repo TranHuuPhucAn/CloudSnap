@@ -43,8 +43,8 @@ resource "aws_iam_role_policy" "lambda_permissions" {
         Resource = aws_sns_topic.notifications.arn
       },
       {
-        Effect = "Allow"
-        Action = ["logs:CreateLogGroup", "logs:CreateLogStream", "logs:PutLogEvents"]
+        Effect   = "Allow"
+        Action   = ["logs:CreateLogGroup", "logs:CreateLogStream", "logs:PutLogEvents"]
         Resource = "arn:aws:logs:*:*:*"
       }
     ]
