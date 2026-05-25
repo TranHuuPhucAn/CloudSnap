@@ -4,6 +4,9 @@
 *.tfstate.backup
 *.tfvars       # Keeps secrets out of git
 .terraform.lock.hcl
+terraform/response.json   
+src/upload-handler/upload-handler.zip
+src/processor/processor.zip
 
 # AWS
 .aws/
