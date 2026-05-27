@@ -1,5 +1,3 @@
-# src/upload_handler/handler.py
-
 import json
 import uuid
 import boto3
