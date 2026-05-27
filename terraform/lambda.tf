@@ -63,6 +63,36 @@ resource "aws_lambda_function" "processor" {
   }
 }
 
+resource "aws_cloudwatch_log_group" "status_handler" {
+  name              = "/aws/lambda/${var.project_name}-status-handler"
+  retention_in_days = 7
+
+  tags = { Project = var.project_name }
+}
+
+resource "aws_lambda_function" "status_handler" {
+  filename         = "../src/status_handler/status_handler.zip"
+  function_name    = "${var.project_name}-status-handler"
+  role             = aws_iam_role.lambda_exec.arn
+  handler          = "handler.lambda_handler"
+  runtime          = "python3.11"
+  timeout          = 10
+  source_code_hash = filebase64sha256("../src/status_handler/status_handler.zip")
+
+  environment {
+    variables = {
+      DYNAMODB_TABLE = aws_dynamodb_table.jobs.name
+    }
+  }
+
+  depends_on = [aws_cloudwatch_log_group.status_handler]
+
+  tags = {
+    Name    = "${var.project_name}-status-handler"
+    Project = var.project_name
+  }
+}
+
 # Tells Lambda to poll SQS and trigger the processor when messages arrive
 resource "aws_lambda_event_source_mapping" "sqs_to_processor" {
   event_source_arn = aws_sqs_queue.processing.arn

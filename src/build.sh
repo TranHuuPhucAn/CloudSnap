@@ -24,4 +24,10 @@ cp handler.py package/
 cd package && zip -r ../processor.zip . -x "*.pyc" "__pycache__/*" && cd ..
 rm -rf package
 
+cd "$(dirname "$0")/status_handler"
+mkdir -p package
+cp handler.py package/
+cd package && zip -r ../status_handler.zip . -x "*.pyc" "__pycache__/*" && cd ..
+rm -rf package
+
 echo "All packages built successfully!"
