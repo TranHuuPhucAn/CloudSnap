@@ -8,7 +8,6 @@ mkdir -p package
 cp handler.py package/
 cd package && zip -r ../upload-handler.zip . -x "*.pyc" "__pycache__/*" && cd ..
 rm -rf package
-echo "✅ upload-handler.zip ready"
 
 echo "🔨 Building processor..."
 cd ../processor
@@ -24,6 +23,5 @@ pip3 install \
 cp handler.py package/
 cd package && zip -r ../processor.zip . -x "*.pyc" "__pycache__/*" && cd ..
 rm -rf package
-echo "✅ processor.zip ready"
 
-echo "🎉 All packages built successfully!"
+echo "All packages built successfully!"

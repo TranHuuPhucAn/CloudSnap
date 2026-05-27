@@ -50,5 +50,17 @@ resource "aws_s3_bucket_lifecycle_configuration" "raw_uploads" {
   }
 }
 
+resource "aws_s3_bucket_notification" "raw_uploads" {
+  bucket = aws_s3_bucket.raw_uploads.id
+
+  queue {
+    queue_arn = aws_sqs_queue.processing.arn
+    events    = ["s3:ObjectCreated:*"]
+  }
+
+  # S3 policy must exist before the notification can be attached
+  depends_on = [aws_sqs_queue_policy.s3_to_sqs]
+}
+
 # Fetch current account ID (used in bucket naming above)
 data "aws_caller_identity" "current" {}
