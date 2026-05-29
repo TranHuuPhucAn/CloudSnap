@@ -6,6 +6,7 @@
 .terraform.lock.hcl
 terraform/response.json   
 *.zip
+src/**/package/
 
 # AWS
 .aws/
