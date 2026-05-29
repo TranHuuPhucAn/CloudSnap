@@ -4,7 +4,7 @@ resource "aws_apigatewayv2_api" "main" {
   description   = "CloudSnap image processing API"
 
   cors_configuration {
-    allow_origins = ["*"]  # Lock this down to a specific domain in production
+    allow_origins = ["*"] # Lock this down to a specific domain in production
     allow_methods = ["GET", "POST", "OPTIONS"]
     allow_headers = ["Content-Type", "Authorization"]
     max_age       = 300
@@ -19,8 +19,8 @@ resource "aws_apigatewayv2_stage" "default" {
   auto_deploy = true
 
   default_route_settings {
-    throttling_burst_limit = 50   
-    throttling_rate_limit  = 100  
+    throttling_burst_limit = 50
+    throttling_rate_limit  = 100
   }
 
   access_log_settings {
