@@ -20,7 +20,7 @@ resource "aws_lambda_function" "upload_handler" {
   runtime                        = "python3.11"
   timeout                        = 30
   source_code_hash               = filebase64sha256("../src/upload-handler/upload-handler.zip")
-  reserved_concurrent_executions = 50
+  reserved_concurrent_executions = 10
 
   environment {
     variables = {
@@ -45,7 +45,7 @@ resource "aws_lambda_function" "processor" {
   runtime                        = "python3.11"
   timeout                        = 300 # 5 minutes — image processing can be slow for large files
   memory_size                    = 512 # Pillow needs more memory than the 128MB default
-  reserved_concurrent_executions = 50
+  reserved_concurrent_executions = 10
 
   source_code_hash = filebase64sha256("../src/processor/processor.zip")
 
@@ -79,7 +79,7 @@ resource "aws_lambda_function" "status_handler" {
   handler                        = "handler.lambda_handler"
   runtime                        = "python3.11"
   timeout                        = 10
-  reserved_concurrent_executions = 50
+  reserved_concurrent_executions = 5
   source_code_hash               = filebase64sha256("../src/status_handler/status_handler.zip")
 
   environment {
