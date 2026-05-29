@@ -13,14 +13,14 @@ resource "aws_cloudwatch_log_group" "processor" {
 }
 
 resource "aws_lambda_function" "upload_handler" {
-  filename                       = "../src/upload-handler/upload-handler.zip"
-  function_name                  = "${var.project_name}-upload-handler"
-  role                           = aws_iam_role.lambda_exec.arn
-  handler                        = "handler.lambda_handler"
-  runtime                        = "python3.11"
-  timeout                        = 30
-  source_code_hash               = filebase64sha256("../src/upload-handler/upload-handler.zip")
-  reserved_concurrent_executions = 2
+  filename         = "../src/upload-handler/upload-handler.zip"
+  function_name    = "${var.project_name}-upload-handler"
+  role             = aws_iam_role.lambda_exec.arn
+  handler          = "handler.lambda_handler"
+  runtime          = "python3.11"
+  timeout          = 30
+  source_code_hash = filebase64sha256("../src/upload-handler/upload-handler.zip")
+  #reserved_concurrent_executions = 2
 
   environment {
     variables = {
@@ -38,14 +38,14 @@ resource "aws_lambda_function" "upload_handler" {
 }
 
 resource "aws_lambda_function" "processor" {
-  filename                       = "../src/processor/processor.zip"
-  function_name                  = "${var.project_name}-processor"
-  role                           = aws_iam_role.lambda_exec.arn
-  handler                        = "handler.lambda_handler"
-  runtime                        = "python3.11"
-  timeout                        = 300 # 5 minutes — image processing can be slow for large files
-  memory_size                    = 512 # Pillow needs more memory than the 128MB default
-  reserved_concurrent_executions = 2
+  filename      = "../src/processor/processor.zip"
+  function_name = "${var.project_name}-processor"
+  role          = aws_iam_role.lambda_exec.arn
+  handler       = "handler.lambda_handler"
+  runtime       = "python3.11"
+  timeout       = 300 # 5 minutes — image processing can be slow for large files
+  memory_size   = 512 # Pillow needs more memory than the 128MB default
+  #reserved_concurrent_executions = 2
 
   source_code_hash = filebase64sha256("../src/processor/processor.zip")
 
@@ -73,14 +73,14 @@ resource "aws_cloudwatch_log_group" "status_handler" {
 }
 
 resource "aws_lambda_function" "status_handler" {
-  filename                       = "../src/status_handler/status_handler.zip"
-  function_name                  = "${var.project_name}-status-handler"
-  role                           = aws_iam_role.lambda_exec.arn
-  handler                        = "handler.lambda_handler"
-  runtime                        = "python3.11"
-  timeout                        = 10
-  reserved_concurrent_executions = 1
-  source_code_hash               = filebase64sha256("../src/status_handler/status_handler.zip")
+  filename      = "../src/status_handler/status_handler.zip"
+  function_name = "${var.project_name}-status-handler"
+  role          = aws_iam_role.lambda_exec.arn
+  handler       = "handler.lambda_handler"
+  runtime       = "python3.11"
+  timeout       = 10
+  #reserved_concurrent_executions = 1
+  source_code_hash = filebase64sha256("../src/status_handler/status_handler.zip")
 
   environment {
     variables = {
