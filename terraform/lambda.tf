@@ -20,7 +20,7 @@ resource "aws_lambda_function" "upload_handler" {
   runtime                        = "python3.11"
   timeout                        = 30
   source_code_hash               = filebase64sha256("../src/upload-handler/upload-handler.zip")
-  reserved_concurrent_executions = 10
+  reserved_concurrent_executions = 4
 
   environment {
     variables = {
@@ -79,7 +79,7 @@ resource "aws_lambda_function" "status_handler" {
   handler                        = "handler.lambda_handler"
   runtime                        = "python3.11"
   timeout                        = 10
-  reserved_concurrent_executions = 5
+  reserved_concurrent_executions = 2
   source_code_hash               = filebase64sha256("../src/status_handler/status_handler.zip")
 
   environment {
