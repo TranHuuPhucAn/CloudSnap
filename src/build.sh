@@ -9,7 +9,6 @@ cp handler.py package/
 cd package && zip -r ../upload-handler.zip . -x "*.pyc" "__pycache__/*" && cd ..
 rm -rf package
 
-echo "🔨 Building processor..."
 cd ../processor
 
 pip3 install \
@@ -22,6 +21,12 @@ pip3 install \
 
 cp handler.py package/
 cd package && zip -r ../processor.zip . -x "*.pyc" "__pycache__/*" && cd ..
+rm -rf package
+
+cd "../status_handler"
+mkdir -p package
+cp handler.py package/
+cd package && zip -r ../status_handler.zip . -x "*.pyc" "__pycache__/*" && cd ..
 rm -rf package
 
 echo "All packages built successfully!"

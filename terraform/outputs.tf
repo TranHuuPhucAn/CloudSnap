@@ -14,3 +14,8 @@ output "dynamodb_table" {
 output "sqs_queue_url" {
   value = aws_sqs_queue.processing.url
 }
+
+output "api_url" {
+  description = "Base URL for the CloudSnap API"
+  value       = aws_apigatewayv2_api.main.api_endpoint
+}
