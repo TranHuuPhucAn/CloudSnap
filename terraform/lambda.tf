@@ -45,7 +45,7 @@ resource "aws_lambda_function" "processor" {
   runtime                        = "python3.11"
   timeout                        = 300 # 5 minutes — image processing can be slow for large files
   memory_size                    = 512 # Pillow needs more memory than the 128MB default
-  reserved_concurrent_executions = 10
+  reserved_concurrent_executions = 4
 
   source_code_hash = filebase64sha256("../src/processor/processor.zip")
 
