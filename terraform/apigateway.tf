@@ -4,7 +4,7 @@ resource "aws_apigatewayv2_api" "main" {
   description   = "CloudSnap image processing API"
 
   cors_configuration {
-    allow_origins = ["*"] # Lock this down to a specific domain in production
+    allow_origins = ["*"] 
     allow_methods = ["GET", "POST", "OPTIONS"]
     allow_headers = ["Content-Type", "Authorization"]
     max_age       = 300

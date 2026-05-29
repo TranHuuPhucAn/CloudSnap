@@ -38,10 +38,6 @@ jobs:
         run: terraform fmt -check -recursive
         working-directory: terraform
 
-      - name: Terraform Validate
-        run: terraform validate
-        working-directory: terraform
-
       - name: Build Lambda packages
         run: |
           pip install \
@@ -54,6 +50,10 @@ jobs:
           chmod +x build.sh
           ./build.sh
         working-directory: src
+
+      - name: Terraform Validate
+        run: terraform validate
+        working-directory: terraform
 
       - name: Terraform Plan
         id: plan
