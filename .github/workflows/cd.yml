@@ -1,0 +1,61 @@
+name: CD — Deploy to AWS
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  deploy:
+    name: Build & Deploy
+    runs-on: ubuntu-latest
+
+    env:
+      AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+      AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+      AWS_DEFAULT_REGION: ${{ secrets.AWS_REGION }}
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Terraform
+        uses: hashicorp/setup-terraform@v3
+        with:
+          terraform_version: "~1.7"
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Terraform Init
+        run: terraform init
+        working-directory: terraform
+
+      # Build all three Lambda packages
+      - name: Build Lambda packages
+        run: |
+          pip install \
+            --platform manylinux2014_x86_64 \
+            --target ./processor/package \
+            --implementation cp \
+            --python-version 3.11 \
+            --only-binary=:all: \
+            pillow --quiet
+          chmod +x build.sh
+          ./build.sh
+        working-directory: src
+
+      - name: Terraform Apply
+        run: terraform apply -auto-approve -var="notification_email=${{ secrets.NOTIFICATION_EMAIL }}"
+        working-directory: terraform
+
+      - name: Deployment Summary
+        run: |
+          echo "## Deployment Complete ✅" >> $GITHUB_STEP_SUMMARY
+          echo "**Branch:** \`main\`" >> $GITHUB_STEP_SUMMARY
+          echo "**Commit:** \`${{ github.sha }}\`" >> $GITHUB_STEP_SUMMARY
+          echo "**Deployed at:** $(date -u)" >> $GITHUB_STEP_SUMMARY
+          echo "**API URL:** $(terraform output -raw api_url)" >> $GITHUB_STEP_SUMMARY
+        working-directory: terraform
