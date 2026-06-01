@@ -16,7 +16,10 @@ resource "aws_cloudwatch_dashboard" "main" {
     widgets = [
       {
         type   = "metric"
-        x      = 0; y = 0; width = 8; height = 6
+        x      = 0
+        y      = 0
+        width  = 8
+        height = 6
         properties = {
           title  = "API Gateway — Request Count"
           region = local.region
@@ -30,7 +33,10 @@ resource "aws_cloudwatch_dashboard" "main" {
       },
       {
         type   = "metric"
-        x      = 8; y = 0; width = 8; height = 6
+        x      = 8
+        y      = 0
+        width  = 8
+        height = 6
         properties = {
           title  = "API Gateway — Latency (ms)"
           region = local.region
@@ -44,7 +50,10 @@ resource "aws_cloudwatch_dashboard" "main" {
       },
       {
         type   = "metric"
-        x      = 16; y = 0; width = 8; height = 6
+        x      = 16
+        y      = 0
+        width  = 8
+        height = 6
         properties = {
           title  = "API Gateway — Error Rates"
           region = local.region
@@ -60,7 +69,10 @@ resource "aws_cloudwatch_dashboard" "main" {
 
       {
         type   = "metric"
-        x      = 0; y = 6; width = 12; height = 6
+        x      = 0
+        y      = 6
+        width  = 12
+        height = 6
         properties = {
           title  = "Lambda — Invocations"
           region = local.region
@@ -76,7 +88,10 @@ resource "aws_cloudwatch_dashboard" "main" {
       },
       {
         type   = "metric"
-        x      = 12; y = 6; width = 12; height = 6
+        x      = 12
+        y      = 6
+        width  = 12
+        height = 6
         properties = {
           title  = "Lambda — Errors"
           region = local.region
@@ -92,7 +107,10 @@ resource "aws_cloudwatch_dashboard" "main" {
       },
       {
         type   = "metric"
-        x      = 0; y = 12; width = 12; height = 6
+        x      = 0
+        y      = 12
+        width  = 12
+        height = 6
         properties = {
           title  = "Lambda — Duration (ms)"
           region = local.region
@@ -107,7 +125,10 @@ resource "aws_cloudwatch_dashboard" "main" {
       },
       {
         type   = "metric"
-        x      = 12; y = 12; width = 12; height = 6
+        x      = 12
+        y      = 12
+        width  = 12
+        height = 6
         properties = {
           title  = "Lambda — Throttles"
           region = local.region
@@ -124,7 +145,10 @@ resource "aws_cloudwatch_dashboard" "main" {
 
       {
         type   = "metric"
-        x      = 0; y = 18; width = 12; height = 6
+        x      = 0
+        y      = 18
+        width  = 12
+        height = 6
         properties = {
           title  = "SQS — Messages in Queue"
           region = local.region
@@ -139,7 +163,10 @@ resource "aws_cloudwatch_dashboard" "main" {
       },
       {
         type   = "metric"
-        x      = 12; y = 18; width = 12; height = 6
+        x      = 12
+        y      = 18
+        width  = 12
+        height = 6
         properties = {
           title  = "DynamoDB — Request Latency (ms)"
           region = local.region
@@ -164,13 +191,13 @@ resource "aws_cloudwatch_metric_alarm" "upload_handler_errors" {
   metric_name         = "Errors"
   dimensions          = { FunctionName = aws_lambda_function.upload_handler.function_name }
   statistic           = "Sum"
-  period              = 60       
-  evaluation_periods  = 2        
-  threshold           = 3        
+  period              = 60
+  evaluation_periods  = 2
+  threshold           = 3
   comparison_operator = "GreaterThanThreshold"
-  treat_missing_data  = "notBreaching"  
+  treat_missing_data  = "notBreaching"
   alarm_actions       = [aws_sns_topic.alarms.arn]
-  ok_actions          = [aws_sns_topic.alarms.arn]  
+  ok_actions          = [aws_sns_topic.alarms.arn]
 
   tags = { Project = var.project_name }
 }
@@ -201,7 +228,7 @@ resource "aws_cloudwatch_metric_alarm" "dlq_messages" {
   dimensions          = { QueueName = aws_sqs_queue.dlq.name }
   statistic           = "Maximum"
   period              = 60
-  evaluation_periods  = 1        
+  evaluation_periods  = 1
   threshold           = 0
   comparison_operator = "GreaterThanThreshold"
   treat_missing_data  = "notBreaching"
@@ -238,7 +265,7 @@ resource "aws_cloudwatch_metric_alarm" "processor_duration" {
   extended_statistic  = "p99"
   period              = 300
   evaluation_periods  = 1
-  threshold           = 240000   # Alert at 4 minutes (80% of the 5 min timeout)
+  threshold           = 240000 # Alert at 4 minutes (80% of the 5 min timeout)
   comparison_operator = "GreaterThanThreshold"
   treat_missing_data  = "notBreaching"
   alarm_actions       = [aws_sns_topic.alarms.arn]
