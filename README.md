@@ -185,4 +185,4 @@ lean without any scheduled cleanup jobs.
 ## Author
 
 **Huu Phuc An Tran**
-[GitHub](https://github.com/TranHuuPhucAn) · [LinkedIn](https://linkedin.com/in/https://www.linkedin.com/in/tr%E1%BA%A7n-h%E1%BB%AFu-ph%C3%BAc-an-4139632a7/)
+[GitHub](https://github.com/TranHuuPhucAn) · [LinkedIn](https://www.linkedin.com/in/tr%E1%BA%A7n-h%E1%BB%AFu-ph%C3%BAc-an-4139632a7/)
