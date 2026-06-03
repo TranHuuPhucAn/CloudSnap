@@ -3,7 +3,7 @@
 A serverless image processing pipeline built on AWS — demonstrating cloud infrastructure,
 event-driven architecture, CI/CD automation, and production-grade observability.
 
-![Architecture](docs/architecture.svg)
+![Architecture](docs/cloudsnap_architecture.svg)
 
 ---
 
